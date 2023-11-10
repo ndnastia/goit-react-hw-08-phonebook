@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { requestLogin, requestLogout, requestUser, requestRegister, setToken} from "helpers/api";
+import { requestLogin, requestLogout, requestUser, requestRefreshUser, requestRegister, setToken} from "helpers/api";
 
 
 
@@ -30,15 +30,17 @@ export const registerThunk = createAsyncThunk(
     }
 );
 
-export const userThunk = createAsyncThunk(
-    'auth/user',
+export const userRefreshThunk = createAsyncThunk(
+    'auth/refresh',
     async (_, thunkAPI) => {
       const state = thunkAPI.getState();
       const token = state.auth.token;
+
+      
   
       try {
         setToken(token);
-        const authData = await requestUser();
+        const authData = await requestRefreshUser();
   
         return authData; 
       } catch (error) {
@@ -55,6 +57,20 @@ export const userThunk = createAsyncThunk(
       },
     }
   );
+
+  export const userThunk = createAsyncThunk(
+    'auth/user',
+    async (_, thunkAPI) => {
+        try {
+            const data = await requestUser();
+            
+            return data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
+
 
 
   export const logOutThunk = createAsyncThunk(
@@ -104,11 +120,17 @@ export const userThunk = createAsyncThunk(
         state.user = action.payload.user;
     })
 
-    .addCase(userThunk.fulfilled, (state, action) => {
+    .addCase(userRefreshThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.authenticated = true;
         state.user = action.payload;
     })
+
+    .addCase(userThunk.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.authenticated = true;
+      state.user = action.payload;
+  })
 
     .addCase(logOutThunk.fulfilled, () => {
         return INITIAL_STATE;
@@ -118,6 +140,7 @@ export const userThunk = createAsyncThunk(
         isAnyOf(
           logOutThunk.pending,
           registerThunk.pending,
+          userRefreshThunk.pending,
           loginThunk.pending,
           userThunk.pending
         ),
@@ -130,6 +153,7 @@ export const userThunk = createAsyncThunk(
         logOutThunk.rejected,
         registerThunk.rejected,
         loginThunk.rejected,
+        userRefreshThunk.rejected,
         userThunk.rejected
       ), (state, action) => {
         state.isLoading = false;

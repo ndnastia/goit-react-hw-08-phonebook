@@ -1,12 +1,13 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectAuthAuthenticated, selectAuthUserData } from "redux/auth.selectors";
 import { logOutThunk } from "redux/authReducer";
 
 
-const Naviagation = () => {
+
+const Navigation = () => {
     const user = useSelector(selectAuthUserData);
     const authenticated = useSelector(selectAuthAuthenticated);
 
@@ -20,14 +21,14 @@ const Naviagation = () => {
     return(
         <header>
             <nav>
-            <Navigate to='/'>
+            <NavLink to='/'>
                 Home
-            </Navigate>
+            </NavLink>
             {authenticated ? 
             (<>
-            <Navigate to='/contacts'>
+            <NavLink to='/contacts'>
                 My contacts
-            </Navigate>
+            </NavLink>
             <div>
                 <p>{user.email}</p>
                 <button onClick={onLogOut}>Log Out</button>
@@ -35,16 +36,16 @@ const Naviagation = () => {
             </div>
             </>) : 
             (<>
-            <Navigate to='/login'>
+            <NavLink to='/login'>
                 Login
-            </Navigate>
-            <Navigate to='/register'>
+            </NavLink>
+            <NavLink to='/register'>
                 Register
-            </Navigate>
+            </NavLink>
             </>)}
             </nav>
         </header>
     )
 }
 
-export default Naviagation;
+export default Navigation;

@@ -1,60 +1,47 @@
-
+import React from "react";
 import style from "./ContactForm.module.css";
+import { useForm } from "react-hook-form";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addContact } from "redux/contactsSlice";
-import { selectContact } from "redux/selectors";
+
 
 export const ContactForm = () => {
-    const contacts = useSelector(selectContact);
-    
-  
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+      } = useForm();
+
     
     const dispatch = useDispatch();
 
-    const handleSubmit = event => {
-        event.preventDefault();
-
-        const name = event.currentTarget.elements.name.value;
-        const phone = event.currentTarget.elements.number.value;
-        
     
-        const newContact = {
-          name,
-          phone, 
-        };
 
-        if (existingContact(contacts, newContact) !== undefined) {
-            alert(`${name} is already in contacts`);
-            return;
-          }
-    
-        dispatch(addContact(newContact));
-        event.currentTarget.reset();
-    }
-
-        const existingContact = (contacts, newContact) => {
-            return contacts.find(contact => contact.name.toLowerCase() === newContact.name.toLowerCase());
-        } 
-
-
- 
+    const onSubmit = contact => {
+        dispatch(addContact(contact));
+        reset();
+      };
 
         return (
             <div className={style['contact-container']}>
-            <form onSubmit={handleSubmit}> 
-                <h2>Name</h2>
-                <label>
-                    <input type="text" name="name" required />
-                </label>
-            
-        <h2>Number</h2>
-                <label>
-                   <input type="tel" name="number" required /> 
-            </label>
-            
-        <button type="submit">Add conact</button>
-            </form>
+            <form onSubmit={handleSubmit(onSubmit)}>
+        <label>
+          <span>Name:</span>
+          <input {...register('name', { required: true })} type="text" />
+          {errors.name && <span>This field is required</span>}
+        </label>
+        <label>
+          <span>Number:</span>
+          <input {...register('number', { required: true })} type="text" />
+          {errors.number && <span>This field is required</span>}
+        </label>
+
+        <button type="submit">Add contact</button>
+      </form>
+
         
         </div>
         )

@@ -2,15 +2,16 @@ import style from "./App.module.css";
 
 import { Suspense, lazy, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Naviagation from './Navigation';
+import Navigation from './Navigation';
 import { Loader } from './Loader/Loader';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { userThunk } from 'redux/authReducer';
+import { userRefreshThunk, userThunk } from 'redux/authReducer';
 import RestrictedRoute from './RestrictedRoute';
 import PrivateRoute from './PrivateRoute';
 
 import { selectAuthIsLoading} from 'redux/auth.selectors';
+
 
 const HomePage = lazy(() => import('pages/HomePage/HomePage'))
 const LoginPage = lazy(() => import('pages/LoginPage/LoginPage'));
@@ -49,13 +50,14 @@ export const App = () => {
   const isLoading = useSelector(selectAuthIsLoading);
 
   useEffect(() => {
+    dispatch(userRefreshThunk());
     dispatch(userThunk())
   }, [dispatch])
   
 
     return (
       <div className={style['app-container']}>
-        <Naviagation />
+        <Navigation />
          {isLoading ? (
         <Loader />
       ) : (
