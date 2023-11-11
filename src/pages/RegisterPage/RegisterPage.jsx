@@ -1,4 +1,5 @@
 import React from "react";
+import style from 'pages/LoginPage/LoginPage.module.css'
 import { useDispatch } from "react-redux";
 import { registerThunk } from "redux/authReducer";
 import { useForm } from "react-hook-form";
@@ -19,28 +20,39 @@ const RegisterPage = () => {
       };
 
         return (
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <label>
-                <span>Email:</span>
-                <input {...register('email', { required: true })} type="email" />
+          <div className={style['container']}>
+            <form className={style['form']} onSubmit={handleSubmit(onSubmit)}>
+
+              <p className={style['form-text']}>Register</p>
+              
+                
+                <input {...register('email', { required: true })} type="email" placeholder="Email"/>
                 {errors.email && <span>This field is required</span>}
-              </label>
-              <label>
-                <span>Name:</span>
-                <input {...register('name', { required: true })} type="text" />
+              
+             
+                
+                <input {...register('name', { required: true })} type="text" placeholder="Name"/>
                 {errors.name && <span>This field is required</span>}
-              </label>
-              <label>
-                <span>Password:</span>
+             
+              
                 <input
                   {...register('password', { required: true, minLength: 7 })}
-                  type="password"
+                  type="password" placeholder="Password"
                 />
                 {errors.password && <span>This field is required</span>}
-              </label>
+              
         
               <button type="submit">Sign Up</button>
             </form>
+            <div class="drops">
+        <div class="drop drop-1"></div>
+        <div class="drop drop-2"></div>
+        <div class="drop drop-3"></div>
+        <div class="drop drop-4"></div>
+        <div class="drop drop-5"></div>
+        </div>
+          </div>
+            
           );
         };
         

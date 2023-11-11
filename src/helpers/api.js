@@ -35,15 +35,6 @@ const contactsInstance = axios.create({
     return data;
   }
 
-  export const requestUser = async () => {
-    const {data} = await contactsInstance.get('/users/current')
-    setToken(data.token);
-
-    return data;
-  }
-
-
-
 export const requestContacts = async () => {
     const { data } = await contactsInstance.get('/contacts');
     return data;

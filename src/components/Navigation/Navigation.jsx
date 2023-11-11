@@ -1,4 +1,5 @@
 import React from "react";
+import style from 'components/Navigation/Navigation.module.css';
 import { NavLink } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -19,8 +20,11 @@ const Navigation = () => {
 
 
     return(
-        <header>
-            <nav>
+        <header className={style['header']}>
+
+            <div className={style['header-nav']}>
+            <p>MY PHONEBOOK</p>
+            <nav className={style['header-link']}>
             <NavLink to='/'>
                 Home
             </NavLink>
@@ -29,11 +33,11 @@ const Navigation = () => {
             <NavLink to='/contacts'>
                 My contacts
             </NavLink>
-            <div>
+            
                 <p>{user.email}</p>
                 <button onClick={onLogOut}>Log Out</button>
 
-            </div>
+            
             </>) : 
             (<>
             <NavLink to='/login'>
@@ -44,6 +48,7 @@ const Navigation = () => {
             </NavLink>
             </>)}
             </nav>
+            </div>
         </header>
     )
 }

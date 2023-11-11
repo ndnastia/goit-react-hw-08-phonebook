@@ -1,0 +1,40 @@
+.header {
+    border-bottom: solid 3px slateblue;
+    
+    width: 100%;
+    background-color: azure;
+    
+    
+}
+
+.header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'georgia';
+    font-weight: bold;
+    font-size: larger;
+    color: slateblue;
+    padding: 20px;
+    
+}
+
+.header-link {
+    font-family: 'georgia';
+    font-weight: bold;
+    font-size: large;
+    color: slateblue;
+    padding: 20px;
+    display: flex;
+    align-items:first center;
+    justify-content: flex-end;
+
+    
+    gap: 20px;
+
+}
+
+.header-link :hover {
+    color: indigo;
+    transition: all 0.3s ease-out;
+}

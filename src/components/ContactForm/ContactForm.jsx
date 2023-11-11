@@ -26,16 +26,16 @@ export const ContactForm = () => {
       };
 
         return (
-            <div className={style['contact-container']}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <div >
+            <form className={style['contact-container']} onSubmit={handleSubmit(onSubmit)}>
         <label>
-          <span>Name:</span>
-          <input {...register('name', { required: true })} type="text" />
+          
+          <input {...register('name', { required: true })} type="text" placeholder="Name"/>
           {errors.name && <span>This field is required</span>}
         </label>
         <label>
-          <span>Number:</span>
-          <input {...register('number', { required: true })} type="text" />
+          
+          <input {...register('number', { required: true })} type="text" placeholder="number"/>
           {errors.number && <span>This field is required</span>}
         </label>
 

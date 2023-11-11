@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { requestLogin, requestLogout, requestUser, requestRefreshUser, requestRegister, setToken} from "helpers/api";
+import { requestLogin, requestLogout, requestRefreshUser, requestRegister, setToken} from "helpers/api";
 
 
 
@@ -58,21 +58,6 @@ export const userRefreshThunk = createAsyncThunk(
     }
   );
 
-  export const userThunk = createAsyncThunk(
-    'auth/user',
-    async (_, thunkAPI) => {
-        try {
-            const data = await requestUser();
-            
-            return data;
-        } catch (error) {
-            return thunkAPI.rejectWithValue(error.message);
-        }
-    }
-);
-
-
-
   export const logOutThunk = createAsyncThunk(
     'auth/logOut',
     async (_, thunkAPI) => {
@@ -126,12 +111,6 @@ export const userRefreshThunk = createAsyncThunk(
         state.user = action.payload;
     })
 
-    .addCase(userThunk.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.authenticated = true;
-      state.user = action.payload;
-  })
-
     .addCase(logOutThunk.fulfilled, () => {
         return INITIAL_STATE;
     })
@@ -141,8 +120,8 @@ export const userRefreshThunk = createAsyncThunk(
           logOutThunk.pending,
           registerThunk.pending,
           userRefreshThunk.pending,
-          loginThunk.pending,
-          userThunk.pending
+          loginThunk.pending
+          
         ),
         state => {
           state.isLoading = true;
@@ -153,8 +132,8 @@ export const userRefreshThunk = createAsyncThunk(
         logOutThunk.rejected,
         registerThunk.rejected,
         loginThunk.rejected,
-        userRefreshThunk.rejected,
-        userThunk.rejected
+        userRefreshThunk.rejected
+
       ), (state, action) => {
         state.isLoading = false;
         state.error = action.payload;

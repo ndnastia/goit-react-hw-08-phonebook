@@ -1,8 +1,9 @@
 .contact-container {
     width:300px;
     padding: 20px;
-    border: solid black 2px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
 }

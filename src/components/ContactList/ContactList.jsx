@@ -1,4 +1,5 @@
 import React from 'react';
+import style from 'components/ContactList/ContactList.module.css'
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {deleteContact, fetchContacts} from 'redux/contactsSlice';
@@ -44,7 +45,7 @@ const ContactList = () => {
         <div>
         {filteredContacts && filteredContacts.map(({name, number, id})=> {
           return (
-            <div key={id}>
+            <div className={style['contacts-list']}key={id}>
           <span>{name}: </span>
           <span>{number}</span>
           <button

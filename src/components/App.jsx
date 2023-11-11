@@ -2,11 +2,11 @@ import style from "./App.module.css";
 
 import { Suspense, lazy, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Navigation from './Navigation';
+import Navigation from './Navigation/Navigation';
 import { Loader } from './Loader/Loader';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { userRefreshThunk, userThunk } from 'redux/authReducer';
+import { userRefreshThunk} from 'redux/authReducer';
 import RestrictedRoute from './RestrictedRoute';
 import PrivateRoute from './PrivateRoute';
 
@@ -51,7 +51,7 @@ export const App = () => {
 
   useEffect(() => {
     dispatch(userRefreshThunk());
-    dispatch(userThunk())
+    
   }, [dispatch])
   
 
