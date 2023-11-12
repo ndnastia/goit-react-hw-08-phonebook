@@ -25,13 +25,13 @@ const contactsInstance = axios.create({
   }
 
   export const requestLogout = async () => {
-    const {data} = contactsInstance.post('/users/logout');
+    const {data} = await contactsInstance.post('/users/logout');
 
     return data;
   }
 
   export const requestRefreshUser = async () => {
-    const {data} = contactsInstance.get('/users/current');
+    const {data} = await contactsInstance.get('/users/current');
     return data;
   }
 

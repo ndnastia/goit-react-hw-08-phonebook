@@ -3,7 +3,7 @@ import style from 'components/Navigation/Navigation.module.css';
 import { NavLink } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { selectAuthAuthenticated, selectAuthUserData } from "redux/auth.selectors";
+import { selectAuthAuthenticated, selectAuthUserData} from "redux/auth.selectors";
 import { logOutThunk } from "redux/authReducer";
 
 
@@ -11,6 +11,7 @@ import { logOutThunk } from "redux/authReducer";
 const Navigation = () => {
     const user = useSelector(selectAuthUserData);
     const authenticated = useSelector(selectAuthAuthenticated);
+    
 
     const dispatch = useDispatch();
 
